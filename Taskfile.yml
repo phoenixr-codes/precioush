@@ -1,0 +1,26 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  SHELL: posh
+  INSTALL_PATH: /usr/local/bin
+
+tasks:
+  install:
+    desc: Installs preciou.sh.
+    cmds:
+      - mkdir -p {{.INSTALL_PATH}}
+      - cp preciou.sh {{.INSTALL_PATH}}/preciou.sh
+  docs:
+    desc: Generates API documentation.
+    cmds:
+      - shdoc < preciou.sh > DOCS.md
+  tests:
+    desc: Runs tests.
+    cmds:
+      - |
+        for script in tests/test_*.sh; do
+          printf "=== %s\n" "$script"
+          {{.SHELL}} "$script"
+        done
